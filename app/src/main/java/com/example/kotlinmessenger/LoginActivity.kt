@@ -48,17 +48,17 @@ class LoginActivity: AppCompatActivity(){
     public fun loginUser(){
 
         // [initialize email and password fields and values respectively ]
-        val email_entered = binding.emailaddressEdittextSignIn.text.toString()
-        val password_entered = binding.passwordEdittextSignIn.text.toString()
+        val emailEntered = binding.emailaddressEdittextSignIn.text.toString()
+        val passwordEntered = binding.passwordEdittextSignIn.text.toString()
 
         // [checking whether the fields i.e. email and password is empty or and prevent from crashing]
-        if(email_entered.isEmpty() || password_entered.isEmpty()){
+        if(emailEntered.isEmpty() || passwordEntered.isEmpty()){
             Toast.makeText(applicationContext,"Please enter the details above",Toast.LENGTH_SHORT).show()
             return
         }
 
         //[START logging in user]
-        auth.signInWithEmailAndPassword(email_entered,password_entered)
+        auth.signInWithEmailAndPassword(emailEntered,passwordEntered)
                 .addOnCompleteListener { task ->
                     if(task.isSuccessful){
 
@@ -66,8 +66,8 @@ class LoginActivity: AppCompatActivity(){
                         Log.d("LoginActivity","singInWithEmailAndPassword:success")
 
                         // [Updating log with the values of email and password entered]
-                        Log.d("LoginActivity","email:$email_entered")
-                        Log.d("LoginActivity","pwd:$password_entered")
+                        Log.d("LoginActivity","email:$emailEntered")
+                        Log.d("LoginActivity","pwd:$passwordEntered")
 
                         Toast.makeText(baseContext,"Sign-in success",Toast.LENGTH_SHORT).show()
 

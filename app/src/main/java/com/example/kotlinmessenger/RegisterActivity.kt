@@ -3,6 +3,7 @@
 import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -66,24 +67,24 @@ import com.google.firebase.ktx.Firebase
      public fun createAccount() {
 
          // [initialize email, password and user-name fields]
-         val email_value = binding.emailaddressEdittextRegistration.getText().toString()
-         val userName_value = binding.usernameEdittextRegistration.getText().toString()
-         val password_value = binding.passwordEdittextRegistration.getText().toString()
+         val emailValue = binding.emailaddressEdittextRegistration.text.toString()
+         val userNameValue = binding.usernameEdittextRegistration.text.toString()
+         val passwordValue = binding.passwordEdittextRegistration.text.toString()
 
          // [checking whether the fields i.e. email and password is empty or and prevent from crashing]
-         if(email_value.isEmpty() || password_value.isEmpty()){
+         if(emailValue.isEmpty() || passwordValue.isEmpty()){
              Toast.makeText(applicationContext,"Please enter the details above",Toast.LENGTH_SHORT).show()
              return
          }
 
          //[ specify conditions for writing password ]
-         if(password_value.length < 6){
+         if(passwordValue.length < 6){
              Toast.makeText(applicationContext,"Please enter a password with minimum character length 6",Toast.LENGTH_SHORT).show()
              return
          }
 
          // [START creating new account]
-         auth.createUserWithEmailAndPassword(email_value, password_value)
+         auth.createUserWithEmailAndPassword(emailValue, passwordValue)
                  .addOnCompleteListener(this) { task ->
                      if (task.isSuccessful) {
 
@@ -91,13 +92,13 @@ import com.google.firebase.ktx.Firebase
                          Log.d("RegisterActivity", "createUserWithEmail:success")
 
                          // [logging the data entered in email, password and username field in RegisterActivity]
-                         Log.d("RegisterActivity","Username: $userName_value")
-                         Log.d("RegisterActivity", "Email is: $email_value")
-                         Log.d("RegisterActivity", "Password is: $password_value")
+                         Log.d("RegisterActivity","Username: $userNameValue")
+                         Log.d("RegisterActivity", "Email is: $emailValue")
+                         Log.d("RegisterActivity", "Password is: $passwordValue")
 
                          // [initialize current user]
                          val user = auth.currentUser
-
+                         uploadImageToFirebaseStorage()
                          Toast.makeText(baseContext,"Account successfully created",Toast.LENGTH_SHORT).show()
 
                      } else {
@@ -121,8 +122,8 @@ import com.google.firebase.ktx.Firebase
          Toast.makeText(applicationContext, "Redirecting", Toast.LENGTH_SHORT).show()
 
          // [making Intent to change from RegisterActivity to LoginActivity]
-         val intent_to_run_loginActivity = Intent(this, LoginActivity::class.java)
-         startActivity(intent_to_run_loginActivity)
+         val intentToRunLoginActivity = Intent(this, LoginActivity::class.java)
+         startActivity(intentToRunLoginActivity)
 
 
      }
@@ -131,10 +132,13 @@ import com.google.firebase.ktx.Firebase
      public fun selectImage(){
          Log.d("RegisterActivity","Try to show image selector")
 
-         val intent_to_run_imageActivity = Intent(Intent.ACTION_PICK)
-         intent_to_run_imageActivity.type = "image/*"
-         startActivityForResult(intent_to_run_imageActivity,0)
+         val intentToRunImageActivity = Intent(Intent.ACTION_PICK)
+         intentToRunImageActivity.type = "image/*"
+         startActivityForResult(intentToRunImageActivity,0)
      }
+
+     // [Declare URI data for the image selected]
+     var selectedImageUri: Uri? = null
 
      // [START function to display result after getting result from intent_to_run_imageActivity]
      override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -146,17 +150,24 @@ import com.google.firebase.ktx.Firebase
              Log.d("RegisterActivity","An image was selected")
 
              // [getting uri from the "data" passed in the onActivityResult function]
-             val selected_image_uri = data.data
+             selectedImageUri = data.data
 
              // [getting bitmap image data from uri]
-             val bitmap_image_selected = MediaStore.Images.Media.getBitmap(this.contentResolver, selected_image_uri)
+             val bitmapImageSelected = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImageUri)
 
              // [projecting the image selected on the button]
-             val bitmap_image_selected_drawable = BitmapDrawable(bitmap_image_selected)
-             binding.selectImageButtonRegistration.setBackgroundDrawable(bitmap_image_selected_drawable)
+             val bitmapImageSelectedDrawable = BitmapDrawable(bitmapImageSelected)
+             binding.selectImageButtonRegistration.setBackgroundDrawable(bitmapImageSelectedDrawable)
 
          }
      }
      // [STOP function onActivityResult]
+
+     // [Function to upload image to Firebase Database]
+     private fun uploadImageToFirebaseStorage(){
+
+     }
+
+
 
 }
