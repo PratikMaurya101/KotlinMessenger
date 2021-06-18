@@ -13,6 +13,8 @@ import com.example.kotlinmessenger.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import java.util.*
 
 
  class RegisterActivity : AppCompatActivity() {
@@ -166,6 +168,17 @@ import com.google.firebase.ktx.Firebase
      // [Function to upload image to Firebase Database]
      private fun uploadImageToFirebaseStorage(){
 
+         // [declare a random filename]
+         val filename = UUID.randomUUID().toString()
+         val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+         ref.putFile(selectedImageUri!!)
+                 .addOnSuccessListener {
+                     Log.d("RegisterActivity","Successfully uploaded image: ${it.metadata?.path}")
+
+                     ref.downloadUrl.addOnSuccessListener { link ->
+                         Log.d("RegisterActivity","File Location: $link")
+                     }
+                 }
      }
 
 
