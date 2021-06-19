@@ -45,7 +45,7 @@ class LoginActivity: AppCompatActivity(){
     }
 
     // [ START function to Login user ]
-    public fun loginUser(){
+    private fun loginUser(){
 
         // [initialize email and password fields and values respectively ]
         val emailEntered = binding.emailaddressEdittextSignIn.text.toString()
@@ -89,7 +89,7 @@ class LoginActivity: AppCompatActivity(){
 
 
     // [ START function to change activity to RegisterActivity ]
-    public fun startRegisterActivity(){
+    private fun startRegisterActivity(){
         Log.d("LoginActivity","Try to show registration activity")
         Toast.makeText(applicationContext, "Redirecting", Toast.LENGTH_SHORT).show()
 

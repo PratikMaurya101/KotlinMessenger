@@ -12,6 +12,7 @@ import android.widget.Toast
 import com.example.kotlinmessenger.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
@@ -66,7 +67,7 @@ import java.util.*
 
 
      // [START function to create account]
-     public fun createAccount() {
+     private fun createAccount() {
 
          // [initialize email, password and user-name fields]
          val emailValue = binding.emailaddressEdittextRegistration.text.toString()
@@ -98,8 +99,6 @@ import java.util.*
                          Log.d("RegisterActivity", "Email is: $emailValue")
                          Log.d("RegisterActivity", "Password is: $passwordValue")
 
-                         // [initialize current user]
-                         val user = auth.currentUser
                          uploadImageToFirebaseStorage()
                          Toast.makeText(baseContext,"Account successfully created",Toast.LENGTH_SHORT).show()
 
@@ -117,7 +116,7 @@ import java.util.*
      // [STOP function to create account]
 
      //[START function to Start LoginActivity]
-     public fun startLoginActivity(){
+     private fun startLoginActivity(){
 
          //[update log to reflect request ot change activity]
          Log.d("RegisterActivity", "Try to show login activity")
@@ -131,7 +130,8 @@ import java.util.*
      }
      // [STOP function to Start LoginActivity]
 
-     public fun selectImage(){
+     // [Function to select image for user's profile]
+     private fun selectImage(){
          Log.d("RegisterActivity","Try to show image selector")
 
          val intentToRunImageActivity = Intent(Intent.ACTION_PICK)
@@ -140,7 +140,7 @@ import java.util.*
      }
 
      // [Declare URI data for the image selected]
-     var selectedImageUri: Uri? = null
+     private var selectedImageUri: Uri? = null
 
      // [START function to display result after getting result from intent_to_run_imageActivity]
      override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -177,10 +177,33 @@ import java.util.*
 
                      ref.downloadUrl.addOnSuccessListener { link ->
                          Log.d("RegisterActivity","File Location: $link")
+
+                         saveUserToFirebaseDatabase(link.toString())
                      }
                  }
+
+     }
+
+     // [Function to upload user to User's info to FirebaseDatabase]
+     private fun saveUserToFirebaseDatabase(profileImageUrl: String){
+         val uid = FirebaseAuth.getInstance().uid ?: ""
+         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+
+         Log.d("RegisterActivity", "Upload the data related to user somehow")
+         // [uploads the data to Real time database]
+         val user = User(uid, binding.usernameEdittextRegistration.text.toString(), profileImageUrl)
+         ref.setValue(user)
+                 .addOnSuccessListener {
+
+                     Log.d("RegisterActivity","Current user: $uid\n username:${binding.usernameEdittextRegistration.text}\n has been save to Firebase Database")
+                 }
+                 .addOnFailureListener {
+                     Log.d("RegisterActivity","Failed to add user to Firebase Database")
+                 }
+
      }
 
 
 
 }
+
