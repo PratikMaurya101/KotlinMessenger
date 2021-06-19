@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
-import com.example.kotlinmessenger.databinding.ActivityMainBinding
+import com.example.kotlinmessenger.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
@@ -25,7 +25,7 @@ import java.util.*
      //[STOP declare_auth]
 
      // [Declare variable of ViewBinding for activity_main.xml layout file]
-     private lateinit var binding: ActivityMainBinding
+     private lateinit var binding: ActivityRegisterBinding
 
      public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,7 @@ import java.util.*
         auth = Firebase.auth
 
         //[inflate the ActivityMainBinding class file]
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
         val view = binding.root
 
         //[select the content view to the inflated ActivityMainBinding file]
@@ -157,9 +157,11 @@ import java.util.*
              // [getting bitmap image data from uri]
              val bitmapImageSelected = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImageUri)
 
-             // [projecting the image selected on the button]
-             val bitmapImageSelectedDrawable = BitmapDrawable(bitmapImageSelected)
-             binding.selectImageButtonRegistration.setBackgroundDrawable(bitmapImageSelectedDrawable)
+             // [projecting the image selected on the circleImageView]
+             binding.selectedImageViewRegistration.setImageBitmap(bitmapImageSelected)
+
+             // [setting the transparency of the "select image" button to full]
+             binding.selectImageButtonRegistration.alpha = 0f
 
          }
      }
