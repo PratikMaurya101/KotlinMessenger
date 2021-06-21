@@ -40,7 +40,7 @@ class LoginActivity: AppCompatActivity(){
         //[setting up to change activity as soon as register text is clicked]
         binding.registrationLink.setOnClickListener {
             //[ function call to start_main_activity ]
-            startRegisterActivity()
+            changeActivityTo("registerActivity")
         }
     }
 
@@ -73,6 +73,7 @@ class LoginActivity: AppCompatActivity(){
 
                         // [initializing current user ]
                         val user = auth.currentUser
+                        changeActivityTo("homeScreenActivity")
                     }
                     else{
 
@@ -87,15 +88,23 @@ class LoginActivity: AppCompatActivity(){
     }
     // [ STOP function to login user ]
 
+    // [Function to change activities]
+    private fun changeActivityTo(activity: String) {
+        when(activity) {
+            "registerActivity" -> {
+                Log.d("LoginActivity","Try to show registration activity")
+                Toast.makeText(applicationContext, "Redirecting", Toast.LENGTH_SHORT).show()
 
-    // [ START function to change activity to RegisterActivity ]
-    private fun startRegisterActivity(){
-        Log.d("LoginActivity","Try to show registration activity")
-        Toast.makeText(applicationContext, "Redirecting", Toast.LENGTH_SHORT).show()
-
-        // creating Intent to change activity to RegisterActivity
-        val intent = Intent(this,RegisterActivity::class.java)
-        startActivity(intent)
+                // creating Intent to change activity to RegisterActivity
+                val intent = Intent(this,RegisterActivity::class.java)
+                startActivity(intent)
+            }
+            "homeScreenActivity" -> {
+                val intentToRunHomeScreenActivity = Intent(this, HomeScreen::class.java)
+                // [this statement is to clear other activities of the stack]
+                intentToRunHomeScreenActivity.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intentToRunHomeScreenActivity)
+            }
+        }
     }
-    // [ STOP function start_register_activity ]
 }

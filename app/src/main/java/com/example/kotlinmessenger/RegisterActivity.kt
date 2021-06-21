@@ -2,7 +2,6 @@
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -52,7 +51,7 @@ import java.util.*
         // [setting up to change activity to LoginActivity]
          binding.signInLink.setOnClickListener {
              //[ function call to start_login_activity ]
-             startLoginActivity()
+             changeActivityTo("loginActivity")
 
          }
          // [stop of changing activity to LoginActivity]
@@ -115,25 +114,11 @@ import java.util.*
      }
      // [STOP function to create account]
 
-     //[START function to Start LoginActivity]
-     private fun startLoginActivity(){
-
-         //[update log to reflect request ot change activity]
-         Log.d("RegisterActivity", "Try to show login activity")
-         Toast.makeText(applicationContext, "Redirecting", Toast.LENGTH_SHORT).show()
-
-         // [making Intent to change from RegisterActivity to LoginActivity]
-         val intentToRunLoginActivity = Intent(this, LoginActivity::class.java)
-         startActivity(intentToRunLoginActivity)
-
-
-     }
-     // [STOP function to Start LoginActivity]
-
      // [Function to select image for user's profile]
      private fun selectImage(){
          Log.d("RegisterActivity","Try to show image selector")
 
+         // [creating intent to run photos app from the device's local storage to select image]
          val intentToRunImageActivity = Intent(Intent.ACTION_PICK)
          intentToRunImageActivity.type = "image/*"
          startActivityForResult(intentToRunImageActivity,0)
@@ -196,13 +181,38 @@ import java.util.*
          val user = User(uid, binding.usernameEdittextRegistration.text.toString(), profileImageUrl)
          ref.setValue(user)
                  .addOnSuccessListener {
-
                      Log.d("RegisterActivity","Current user: $uid\n username:${binding.usernameEdittextRegistration.text}\n has been save to Firebase Database")
+                     Toast.makeText(baseContext,"Signing in",Toast.LENGTH_SHORT).show()
+                     changeActivityTo("homeScreenActivity")
                  }
                  .addOnFailureListener {
                      Log.d("RegisterActivity","Failed to add user to Firebase Database")
                  }
 
+     }
+
+     // [Function to change between activities]
+     private fun changeActivityTo(activity: String) {
+
+         when(activity){
+             "loginActivity" -> {
+                 //[update log to reflect request ot change activity]
+                 Log.d("RegisterActivity", "Try to show login activity")
+                 Toast.makeText(applicationContext, "Redirecting", Toast.LENGTH_SHORT).show()
+
+                 // [making Intent to change from RegisterActivity to LoginActivity]
+                 val intentToRunLoginActivity = Intent(this, LoginActivity::class.java)
+                 startActivity(intentToRunLoginActivity)
+             }
+             "homeScreenActivity" -> {
+                 val intentToRunHomeScreenActivity = Intent(this, HomeScreen::class.java)
+                 // [this statement is to clear other activities of the stack]
+                 intentToRunHomeScreenActivity.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                 startActivity(intentToRunHomeScreenActivity)
+             }
+
+
+         }
      }
 
 
