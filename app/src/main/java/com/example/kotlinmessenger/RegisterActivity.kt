@@ -64,6 +64,17 @@ import java.util.*
          }
      }
 
+     // [function to check user condition on app onStart state]
+     public override fun onStart() {
+         super.onStart()
+
+         // [to check whether there is some user already logged in the app]
+         val currentUser = auth.currentUser
+         if( currentUser != null ) {
+             changeActivityTo("homeScreenActivity")
+         }
+     }
+
 
      // [START function to create account]
      private fun createAccount() {
@@ -214,6 +225,8 @@ import java.util.*
 
          }
      }
+
+     
 
 
 

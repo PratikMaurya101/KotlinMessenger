@@ -15,7 +15,6 @@ class HomeScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         auth = Firebase.auth
 
         val currentUser = "Current User is: ${auth.currentUser?.email}"
