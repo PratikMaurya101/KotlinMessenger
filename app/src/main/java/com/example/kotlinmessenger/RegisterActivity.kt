@@ -34,10 +34,9 @@ import java.util.*
 
         //[inflate the ActivityMainBinding class file]
         binding = ActivityRegisterBinding.inflate(layoutInflater)
-        val view = binding.root
 
         //[select the content view to the inflated ActivityMainBinding file]
-        setContentView(view)
+        setContentView(binding.root)
 
         //[setting up to take inputs and do user creation as soon a registration button is clicked]
         binding.registerButtonRegistration.setOnClickListener {

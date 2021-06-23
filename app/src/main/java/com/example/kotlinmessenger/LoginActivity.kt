@@ -26,10 +26,9 @@ class LoginActivity: AppCompatActivity(){
 
         //[inflate the ActivityLoginBinding class]
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        val view = binding.root
 
         //[sets the content view to the inflated ActivityLoginBinding file]
-        setContentView(view)
+        setContentView(binding.root)
 
         //[setting up to take input as soon as login button is clicked]
         binding.loginButtonLogIn.setOnClickListener {
