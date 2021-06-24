@@ -14,7 +14,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled = true //enabling multidex support
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -47,13 +47,24 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    // added for firebase access to this project
     implementation platform('com.google.firebase:firebase-bom:28.1.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
     implementation 'com.google.firebase:firebase-database-ktx'
 
+    // added for circleImageView and square/picasso
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // added for groupie recycler
+    implementation "com.github.lisawray.groupie:groupie:2.9.0"
+    implementation "com.github.lisawray.groupie:groupie-viewbinding:2.9.0"
+
+    // added for multidex
+    implementation 'androidx.multidex:multidex:2.0.1'
+
 }
 
 apply plugin: 'com.android.application'

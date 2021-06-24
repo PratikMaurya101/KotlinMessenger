@@ -27,7 +27,7 @@ class HomeScreen : AppCompatActivity() {
         binding = ActivityHomeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.editTextTextPersonName.text = currentUser
+        binding.editTextTextPersonName.text = currentUser //for check which user is signed in, remove later
 
     }
 
@@ -40,6 +40,7 @@ class HomeScreen : AppCompatActivity() {
             }
             R.id.new_chat -> {
                 // implement method to start new chat
+                changeActivityTo("newChatActivity")
             }
         }
         return super.onOptionsItemSelected(item)
@@ -57,6 +58,9 @@ class HomeScreen : AppCompatActivity() {
             }
             "newChatActivity" -> {
                 //change activity to new chat
+                Log.d("HomeScreenActivity","Opening new chat page")
+                val intentToRunNewChatActivity = Intent(this,NewChatActivity::class.java)
+                startActivity(intentToRunNewChatActivity)
             }
         }
 
