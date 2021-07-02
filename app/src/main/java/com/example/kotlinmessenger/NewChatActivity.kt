@@ -22,14 +22,6 @@ class NewChatActivity : AppCompatActivity() {
         // changing the action bar title
         supportActionBar?.title = "Chat with..."
 
-        val adapter = GroupieAdapter()
-
-        // [adding a new Item(ParticipantItem) instance to the adapter]
-        adapter.add(ParticipantItem())  //might need to remove this and ^
-
-        // [setting the cardView to the recycler view adapter]
-        binding.recyclerviewNewchat.setAdapter(adapter)
-
         fetchUsers()
 
     }
@@ -40,13 +32,23 @@ class NewChatActivity : AppCompatActivity() {
         // research about this later
         userReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+
+                val adapter = GroupieAdapter() //initialize adapter
+
                 snapshot.children.forEach { userDetails ->
                     Log.d("NewChatActivity","USER:$userDetails")
+                    val participant = userDetails.getValue(User::class.java)
+                    if(participant != null) {
+                        adapter.add(ParticipantItem(participant)) //add to the RV
+                    }
+
                 }
+                // [setting the cardView to the recycler view adapter]
+                binding.recyclerviewNewchat.adapter = adapter
             }
 
             override fun onCancelled(error: DatabaseError) {
-
+                Log.d("NewChatActivity","$error")
             }
 
         })
