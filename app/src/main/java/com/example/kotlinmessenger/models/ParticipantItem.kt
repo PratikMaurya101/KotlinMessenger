@@ -1,6 +1,7 @@
-package com.example.kotlinmessenger
+package com.example.kotlinmessenger.models
 
 import android.view.View
+import com.example.kotlinmessenger.R
 import com.example.kotlinmessenger.databinding.UserRowNewchatBinding
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.viewbinding.BindableItem

@@ -1,10 +1,11 @@
-package com.example.kotlinmessenger
+package com.example.kotlinmessenger.registerlogin
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.kotlinmessenger.message.HomeScreen
 import com.example.kotlinmessenger.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -95,7 +96,7 @@ class LoginActivity: AppCompatActivity(){
                 Toast.makeText(applicationContext, "Redirecting", Toast.LENGTH_SHORT).show()
 
                 // creating Intent to change activity to RegisterActivity
-                val intent = Intent(this,RegisterActivity::class.java)
+                val intent = Intent(this, RegisterActivity::class.java)
                 startActivity(intent)
             }
             "homeScreenActivity" -> {

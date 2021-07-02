@@ -11,19 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinMessenger">
-        <activity android:name=".NewChatActivity">
+        <activity android:name=".message.NewChatActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeScreen"/>
+                android:value=".message.HomeScreen"/>
         </activity>
-        <activity android:name=".HomeScreen" />
-        <activity android:name=".RegisterActivity">
+        <activity android:name=".message.HomeScreen" />
+        <activity android:name=".registerlogin.RegisterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".registerlogin.LoginActivity" />
 
     </application>
 

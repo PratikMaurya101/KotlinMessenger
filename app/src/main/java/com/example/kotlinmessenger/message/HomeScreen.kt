@@ -1,4 +1,4 @@
-package com.example.kotlinmessenger
+package com.example.kotlinmessenger.message
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +7,9 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import com.example.kotlinmessenger.R
 import com.example.kotlinmessenger.databinding.ActivityHomeScreenBinding
+import com.example.kotlinmessenger.registerlogin.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -53,13 +55,13 @@ class HomeScreen : AppCompatActivity() {
                 Log.d("HomeScreenActivity","Signing out user")
                 Toast.makeText(baseContext,"Signing out",Toast.LENGTH_SHORT).show()
 
-                val intentToRunRegisterActivity = Intent(this,RegisterActivity::class.java)
+                val intentToRunRegisterActivity = Intent(this, RegisterActivity::class.java)
                 startActivity(intentToRunRegisterActivity)
             }
             "newChatActivity" -> {
                 //change activity to new chat
                 Log.d("HomeScreenActivity","Opening new chat page")
-                val intentToRunNewChatActivity = Intent(this,NewChatActivity::class.java)
+                val intentToRunNewChatActivity = Intent(this, NewChatActivity::class.java)
                 startActivity(intentToRunNewChatActivity)
             }
         }

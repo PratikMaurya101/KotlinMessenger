@@ -1,4 +1,4 @@
- package com.example.kotlinmessenger
+ package com.example.kotlinmessenger.registerlogin
 
 import android.app.Activity
 import android.content.Intent
@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import com.example.kotlinmessenger.message.HomeScreen
+import com.example.kotlinmessenger.models.User
 import com.example.kotlinmessenger.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
