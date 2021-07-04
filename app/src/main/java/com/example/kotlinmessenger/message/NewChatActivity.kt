@@ -1,5 +1,6 @@
 package com.example.kotlinmessenger.message
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -35,22 +36,33 @@ class NewChatActivity : AppCompatActivity() {
         userReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                val adapter = GroupieAdapter() //initialize adapter
+                val adapterNewChat = GroupieAdapter() //initialize adapter
 
                 snapshot.children.forEach { userDetails ->
                     Log.d("NewChatActivity","USER:$userDetails")
                     val participant = userDetails.getValue(User::class.java)
                     if(participant != null) {
-                        adapter.add(ParticipantItem(participant)) //add to the RV
+                        adapterNewChat.add(ParticipantItem(participant)) //add to the RV
                     }
 
                 }
                 // [setting the cardView to the recycler view adapter]
-                binding.recyclerviewNewchat.adapter = adapter
+                binding.recyclerviewNewchat.adapter = adapterNewChat
+
+                // [handles click event of RecyclerView]
+                adapterNewChat.setOnItemClickListener { item, view ->
+                    Log.d("NewChatActivity","Open ChatLogActivity")
+                    val intentToOpenChat = Intent(view.context, ChatLogActivity::class.java)
+                    startActivity(intentToOpenChat)
+                    // finishes the activity NewChatActivity for back stack
+                    finish()
+                    Log.d("NewChatActivity","NewChatActivity successfully removed from " +
+                            "back stack")
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.d("NewChatActivity","$error")
+                Log.d("NewChatActivity","Error in loading users:$error")
             }
 
         })

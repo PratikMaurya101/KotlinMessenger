@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/purple_200"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/chat_log_sender_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/user_image_circle"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/purple_700"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/chat_log_message_received"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/chat_bubble"
+        android:maxWidth="250dp"
+        android:padding="10dp"
+        android:text="hi dude"
+        app:layout_constraintBottom_toBottomOf="@+id/chat_log_sender_image"
+        app:layout_constraintStart_toEndOf="@+id/chat_log_sender_image"
+        app:layout_constraintTop_toTopOf="@+id/chat_log_sender_image" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,9 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinMessenger">
-        <activity android:name=".message.NewChatActivity">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
+        <activity android:name=".message.ChatLogActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value=".message.HomeScreen"/>
+        </activity>
+        <activity android:name=".message.NewChatActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".message.HomeScreen" />
         </activity>
         <activity android:name=".message.HomeScreen" />
         <activity android:name=".registerlogin.RegisterActivity">
@@ -24,7 +30,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".registerlogin.LoginActivity" />
-
     </application>
 
 </manifest>
