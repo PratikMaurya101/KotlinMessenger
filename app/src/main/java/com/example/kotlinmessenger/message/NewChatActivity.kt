@@ -29,6 +29,11 @@ class NewChatActivity : AppCompatActivity() {
 
     }
 
+    // make for sending KEY in intent and easily manageable(not sure)
+    companion object {
+        val PARTICIPANT_KEY = "PARTICIPANT_KEY"
+    }
+
     private fun fetchUsers() {
         val userReference = FirebaseDatabase.getInstance().getReference("/users")
 
@@ -51,10 +56,23 @@ class NewChatActivity : AppCompatActivity() {
 
                 // [handles click event of RecyclerView]
                 adapterNewChat.setOnItemClickListener { item, view ->
+
+                    // casting item as participantItem  in order to use the userName under
+                    // the particular participant item
+                    /**
+                     * What we doing here is first we are creating and object participantItem
+                     * Which takes the data from 'item' in this itemClickListener ^
+                     * Also we make the User.kt class Parcelable. Then we send the user object
+                     * taken from the particular 'Item' from the ParticipantItem with the intent
+                     * in form of parcel
+                     */
+                    val participantItem = item as ParticipantItem
                     Log.d("NewChatActivity","Open ChatLogActivity")
                     val intentToOpenChat = Intent(view.context, ChatLogActivity::class.java)
+                    // sending User object as bundle data with intent under key PARTICIPANT_KEY
+                    intentToOpenChat.putExtra(PARTICIPANT_KEY,participantItem.user)
                     startActivity(intentToOpenChat)
-                    // finishes the activity NewChatActivity for back stack
+                    // finishes the activity NewChatActivity from back stack
                     finish()
                     Log.d("NewChatActivity","NewChatActivity successfully removed from " +
                             "back stack")
