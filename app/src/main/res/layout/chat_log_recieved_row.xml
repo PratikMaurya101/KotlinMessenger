@@ -9,8 +9,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/chat_log_sender_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_margin="5dp"
         android:background="@drawable/user_image_circle"
         app:civ_border_width="2dp"
@@ -26,7 +26,7 @@
         android:layout_margin="5dp"
         android:background="@drawable/chat_bubble"
         android:maxWidth="250dp"
-        android:padding="10dp"
+        android:padding="15dp"
         android:text="hi dude"
         app:layout_constraintBottom_toBottomOf="@+id/chat_log_sender_image"
         app:layout_constraintStart_toEndOf="@+id/chat_log_sender_image"

@@ -31,13 +31,13 @@ class NewChatActivity : AppCompatActivity() {
 
     // make for sending KEY in intent and easily manageable(not sure)
     companion object {
-        val PARTICIPANT_KEY = "PARTICIPANT_KEY"
+        const val PARTICIPANT_KEY = "PARTICIPANT_KEY"
     }
 
     private fun fetchUsers() {
         val userReference = FirebaseDatabase.getInstance().getReference("/users")
 
-        // research about this later
+        // TODO research about this later
         userReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -59,7 +59,7 @@ class NewChatActivity : AppCompatActivity() {
 
                     // casting item as participantItem  in order to use the userName under
                     // the particular participant item
-                    /**
+                    /*
                      * What we doing here is first we are creating and object participantItem
                      * Which takes the data from 'item' in this itemClickListener ^
                      * Also we make the User.kt class Parcelable. Then we send the user object

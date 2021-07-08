@@ -6,10 +6,10 @@ import com.example.kotlinmessenger.databinding.ChatLogRecievedRowBinding
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.viewbinding.BindableItem
 
-class ChatSenderItem(private val senderImageUrl: String?): BindableItem<ChatLogRecievedRowBinding>() {
+class ChatSenderItem(val chatText: String?, val sender: User): BindableItem<ChatLogRecievedRowBinding>() {
     override fun bind(viewBinding: ChatLogRecievedRowBinding, position: Int) {
-        viewBinding.chatLogMessageReceived.text = "New phone. Who is dis?"
-        Picasso.get().load(senderImageUrl).into(viewBinding.chatLogSenderImage)
+        viewBinding.chatLogMessageReceived.text = chatText
+        Picasso.get().load(sender.profileImageUrl).into(viewBinding.chatLogSenderImage)
     }
 
     override fun getLayout(): Int {
