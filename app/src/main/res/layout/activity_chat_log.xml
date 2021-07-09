@@ -46,6 +46,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/chat_log_recieved_row" />
+        tools:listitem="@layout/chat_log_received_row" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

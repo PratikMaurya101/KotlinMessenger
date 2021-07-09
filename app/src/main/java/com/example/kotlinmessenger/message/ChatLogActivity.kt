@@ -62,7 +62,10 @@ class ChatLogActivity : AppCompatActivity() {
 
     // displays chat in ChatLog RV
     private fun listenForMessages(participant: User, user: User) {
-        val refForChatLog = FirebaseDatabase.getInstance().getReference("/messages")
+
+        val fromId = user.uid
+        val toId = participant.uid
+        val refForChatLog = FirebaseDatabase.getInstance().getReference("/user_messages/$fromId/$toId")
 
         // event listener for every child of the data stored
         refForChatLog.addChildEventListener(object: ChildEventListener {
@@ -70,7 +73,7 @@ class ChatLogActivity : AppCompatActivity() {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val chatData = snapshot.getValue(ChatMessage::class.java)
 
-                // TODO yet to write the code for adding chats to RV
+                // adds chat's from DB to the chatLog's RV
                 if (chatData != null) {
                     // to add messages to RV w.r.t their location
                     Log.d(LOG_TAG, chatData.text)
@@ -125,18 +128,21 @@ class ChatLogActivity : AppCompatActivity() {
         }
 
         // get reference to the location in database where we want to save the data
-        val reference = FirebaseDatabase.getInstance().getReference("/messages").push()
+        val fromReference = FirebaseDatabase.getInstance().getReference("/user_messages/$fromId/$toId").push()
+        val toReference = FirebaseDatabase.getInstance().getReference("/user_messages/$toId/$fromId").push()
 
-        val chatMessage = ChatMessage(reference.key.toString(), message.toString(), toId.toString(), fromId.toString(),System.currentTimeMillis()/1000)
+        val chatMessage = ChatMessage(fromReference.key.toString(), message.toString(), toId.toString(), fromId.toString(),System.currentTimeMillis()/1000)
 
         // send the chatMessage to database
-        reference.setValue(chatMessage)
+        fromReference.setValue(chatMessage)
                 .addOnSuccessListener {
-                    Log.d(LOG_TAG,"Saved the chat message: ${reference.key}")
+                    Log.d(LOG_TAG,"Saved the chat message: ${fromReference.key}")
+                    binding.editTextChatLog.text.clear()
                 }
                 .addOnFailureListener {
                     Log.d(LOG_TAG,"Error in saving chat: $it")
                 }
-
+        // adds message to DB with to-reference
+        toReference.setValue((chatMessage))
     }
 }
