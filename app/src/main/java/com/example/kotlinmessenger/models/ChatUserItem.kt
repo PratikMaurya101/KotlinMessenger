@@ -6,7 +6,6 @@ import com.example.kotlinmessenger.databinding.ChatLogReplyRowBinding
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.viewbinding.BindableItem
 
-// TODO("Check and verify the constructor user: User and see if it works [We are trying to parcelize]")
 class ChatUserItem(val chatText: String, val user: User): BindableItem<ChatLogReplyRowBinding>() {
     override fun bind(viewBinding: ChatLogReplyRowBinding, position: Int) {
         viewBinding.chatLogMessageSent.text = chatText

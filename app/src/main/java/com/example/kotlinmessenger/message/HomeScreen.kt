@@ -9,34 +9,49 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.example.kotlinmessenger.R
 import com.example.kotlinmessenger.databinding.ActivityHomeScreenBinding
+import com.example.kotlinmessenger.models.ChatMessage
+import com.example.kotlinmessenger.models.LatestMessageItem
+import com.example.kotlinmessenger.models.ParticipantItem
 import com.example.kotlinmessenger.models.User
 import com.example.kotlinmessenger.registerlogin.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
+import com.xwray.groupie.GroupieAdapter
+import java.util.HashMap
 
 class HomeScreen : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityHomeScreenBinding
+    private val adapterHomeScreen = GroupieAdapter()
+    // to store the newest chats and then re-apply RV todo("change this later") task(t1) "RV-shuffle"
+    private val latestMessagesMap = HashMap<String, ChatMessage>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         auth = Firebase.auth
 
+
+        latestMessagesListener(auth)
+
         // function call to get current user
         getCurrentUser(auth)
 
 
         binding = ActivityHomeScreenBinding.inflate(layoutInflater)
+
+
+        binding.recyclerViewHomeScreen.adapter = adapterHomeScreen
+
         setContentView(binding.root)
 
-        binding.editTextTextPersonName.text = "Current User is: ${auth.currentUser?.email}" //for check which user is signed in, remove later
+        binding.fabNewChat.setOnClickListener {
+            changeActivityTo("newChatActivity")
+        }
+
 
     }
 
@@ -109,6 +124,52 @@ class HomeScreen : AppCompatActivity() {
         })
 
 
+    }
+
+    // todo t1
+    private fun refreshRecyclerView() {
+        adapterHomeScreen.clear()
+        latestMessagesMap.values.forEach {
+            adapterHomeScreen.add((LatestMessageItem(it)))
+        }
+    }
+
+    // displays latest messages on the HomeScreen activity
+    private fun latestMessagesListener(auth: FirebaseAuth) {
+        val fromId = auth.currentUser?.uid
+        val ref = FirebaseDatabase.getInstance().getReference("/latest_message/$fromId")
+
+        ref.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val latestMessage = snapshot.getValue(ChatMessage::class.java)
+
+                if (latestMessage != null) {
+                    latestMessagesMap[snapshot.key!!] = latestMessage   // todo t1
+                    refreshRecyclerView()
+                }
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                val latestMessage = snapshot.getValue(ChatMessage::class.java)
+                if (latestMessage != null) {
+                    latestMessagesMap[snapshot.key!!] = latestMessage   // todo t1
+                    refreshRecyclerView()
+                }
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+                // beyond the scope
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                // beyond the scope
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // beyond the scope
+            }
+
+        })
     }
 
     // [Function to create custom menu action bar]

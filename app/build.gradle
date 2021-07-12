@@ -16,6 +16,7 @@ android {
         versionName "1.0"
         multiDexEnabled = true //enabling multidex support
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true   // for FAB in home screen activity
     }
 
     buildTypes {
@@ -64,6 +65,9 @@ dependencies {
 
     // added for multidex
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    //floating action button material
+    implementation 'com.google.android.material:material:1.5.0-alpha01'
 
 }
 

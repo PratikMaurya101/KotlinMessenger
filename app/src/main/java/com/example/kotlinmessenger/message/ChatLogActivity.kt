@@ -144,5 +144,20 @@ class ChatLogActivity : AppCompatActivity() {
                 }
         // adds message to DB with to-reference
         toReference.setValue((chatMessage))
+
+        // for HomeScreen activity to show latest messages notification in RV
+        // first we will create a reference in our DB for the latest chat b/w users
+        /**
+         * This code saves the latest message sent from user's with both sender's and receiver's
+         * reference
+         */
+        // [START]
+        val latestChatFromReference = FirebaseDatabase.getInstance().getReference("/latest_message/$fromId/$toId")
+        latestChatFromReference.setValue(chatMessage)
+        // to-reference
+        val latestChatToReference = FirebaseDatabase.getInstance().getReference("/latest_message/$toId/$fromId")
+        latestChatToReference.setValue(chatMessage)
+        // [STOP]
+
     }
 }

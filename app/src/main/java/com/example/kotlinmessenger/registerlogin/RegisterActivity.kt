@@ -97,6 +97,12 @@ import java.util.*
              return
          }
 
+         // check to make sure that user selects profile image
+         if(binding.selectedImageViewRegistration.drawable == null) {
+             Toast.makeText(baseContext,"Please select profile image",Toast.LENGTH_SHORT).show()
+             return
+         }
+
          // [START creating new account]
          auth.createUserWithEmailAndPassword(emailValue, passwordValue)
                  .addOnCompleteListener(this) { task ->

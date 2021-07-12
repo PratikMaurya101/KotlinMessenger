@@ -7,21 +7,34 @@
     android:background="@color/purple_200"
     tools:context=".message.HomeScreen">
 
-    <TextView
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="85dp"
-        android:layout_marginLeft="85dp"
-        android:layout_marginTop="342dp"
-        android:layout_marginEnd="116dp"
-        android:layout_marginRight="116dp"
-        android:layout_marginBottom="344dp"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:text="HI"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_home_screen"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/latest_message_row"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_new_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:clickable="true"
+        app:borderWidth="0dp"
+        app:rippleColor="@color/purple_700"
+        android:focusable="true"
+        app:tint="@color/purple_200"
+        android:backgroundTint="#590B8F"
+        app:fabSize="auto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_new_message" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
