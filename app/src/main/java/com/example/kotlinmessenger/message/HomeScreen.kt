@@ -48,6 +48,15 @@ class HomeScreen : AppCompatActivity() {
 
         setContentView(binding.root)
 
+        // to open chat log activity once selected
+        adapterHomeScreen.setOnItemClickListener { item, view ->
+            val latestChatItem = item as LatestMessageItem
+            val user = latestChatItem.chatParticipant
+            val intentToRunChatLogActivity = Intent(view.context,ChatLogActivity::class.java)
+            intentToRunChatLogActivity.putExtra(NewChatActivity.PARTICIPANT_KEY,user)
+            startActivity(intentToRunChatLogActivity)
+        }
+
         binding.fabNewChat.setOnClickListener {
             changeActivityTo("newChatActivity")
         }
