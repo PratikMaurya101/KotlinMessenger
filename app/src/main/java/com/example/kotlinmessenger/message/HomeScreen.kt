@@ -1,17 +1,16 @@
 package com.example.kotlinmessenger.message
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.kotlinmessenger.R
 import com.example.kotlinmessenger.databinding.ActivityHomeScreenBinding
 import com.example.kotlinmessenger.models.ChatMessage
 import com.example.kotlinmessenger.models.LatestMessageItem
-import com.example.kotlinmessenger.models.ParticipantItem
 import com.example.kotlinmessenger.models.User
 import com.example.kotlinmessenger.registerlogin.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -19,7 +18,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.xwray.groupie.GroupieAdapter
-import java.util.HashMap
+import java.util.*
 
 class HomeScreen : AppCompatActivity() {
 
